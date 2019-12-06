@@ -16,7 +16,7 @@ def status_message():
         "ntpJitter": 99999,
         "timestamp": time.time(),
         "ip": ni.ifaddresses('bat0')[2][0]['addr'],
-        "health": "not implemented",
+        "health": "ok",
         "validUntil": time.time() + 10
     }
     return msg
@@ -75,4 +75,5 @@ def button_handler(channel):
 led_button.register_pressed_callback(button_handler)
 
 while True:
-    time.sleep(1)
+    m.mqttc.publish("buttongame/buttons/" + socket.gethostname() + "/status", status_message())
+    time.sleep(5)
